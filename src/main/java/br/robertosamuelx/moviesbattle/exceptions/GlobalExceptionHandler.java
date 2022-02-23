@@ -17,8 +17,22 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(value = PlayerException.class)
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-  protected Issue invalidPlayer(PlayerException ex, WebRequest request) {
-    LOGGER.error("Invalid player...");
+  protected Issue playerException(PlayerException ex, WebRequest request) {
+    LOGGER.error("player Exception");
+    return ex.getIssue();
+  }
+
+  @ExceptionHandler(value = QuizException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  protected Issue quizException(QuizException ex, WebRequest request) {
+    LOGGER.error("quiz Exception");
+    return ex.getIssue();
+  }
+
+  @ExceptionHandler(value = RoundException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  protected Issue roundException(RoundException ex, WebRequest request) {
+    LOGGER.error("round Exception");
     return ex.getIssue();
   }
 }

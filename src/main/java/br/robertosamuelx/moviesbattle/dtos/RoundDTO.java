@@ -6,8 +6,6 @@ public class RoundDTO {
 
   private List<MovieDTO> movies;
 
-  private MovieDTO correctMovie;
-
   private Integer attempts;
 
   public RoundDTO() {
@@ -22,14 +20,6 @@ public class RoundDTO {
     this.movies = movies;
   }
 
-  public MovieDTO getCorrectMovie() {
-    return correctMovie;
-  }
-
-  public void setCorrectMovie(MovieDTO correctMovie) {
-    this.correctMovie = correctMovie;
-  }
-
   public Integer getAttempts() {
     return attempts;
   }
@@ -38,9 +28,8 @@ public class RoundDTO {
     this.attempts = attempts;
   }
 
-  public RoundDTO(List<MovieDTO> movies, MovieDTO correctMovie, Integer attempts) {
+  public RoundDTO(List<MovieDTO> movies, Integer attempts) {
     this.movies = movies;
-    this.correctMovie = correctMovie;
     this.attempts = attempts;
   }
 }

@@ -9,7 +9,6 @@ public class QuizDTO {
   private List<RoundDTO> rounds;
 
   public QuizDTO(UUID id, List<RoundDTO> rounds) {
-    super();
     this.id = id;
     this.rounds = rounds;
   }

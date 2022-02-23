@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,13 +19,24 @@ public class RoundModel {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @ManyToOne private QuizModel quiz;
+  @OneToOne private QuizModel quiz;
 
   @OneToMany private List<MovieModel> movies;
 
-  @OneToOne private MovieModel correctMovie;
-
   @Column private Integer attempts;
+
+  @Column private Boolean isAnswered;
+
+  public RoundModel() {
+    // TODO Auto-generated constructor stub
+  }
+
+  public RoundModel(QuizModel quiz, List<MovieModel> movies) {
+    this.quiz = quiz;
+    this.movies = movies;
+    this.attempts = 0;
+    this.isAnswered = false;
+  }
 
   public UUID getId() {
     return id;
@@ -52,19 +62,24 @@ public class RoundModel {
     this.movies = movies;
   }
 
-  public MovieModel getCorrectMovie() {
-    return correctMovie;
-  }
-
-  public void setCorrectMovie(MovieModel correctMovie) {
-    this.correctMovie = correctMovie;
-  }
-
   public Integer getAttempts() {
     return attempts;
   }
 
   public void setAttempts(Integer attempts) {
     this.attempts = attempts;
+  }
+
+  public Boolean getIsAnswered() {
+    return isAnswered;
+  }
+
+  public void setIsAnswered(Boolean isAnswered) {
+    this.isAnswered = isAnswered;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("id={0}\tisAnswered={1}", id, isAnswered);
   }
 }

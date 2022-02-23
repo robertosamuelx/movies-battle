@@ -1,7 +1,10 @@
 package br.robertosamuelx.moviesbattle.models;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,23 +21,39 @@ public class QuizModel {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @OneToMany private List<RoundModel> rounds;
+  @OneToMany(mappedBy = "quiz")
+  private List<RoundModel> rounds;
 
   @OneToOne private PlayerModel player;
 
+  @Column(nullable = false)
+  private LocalDateTime startedAt;
+
+  @Column private LocalDateTime closedAt;
+
   public QuizModel() {}
+
+  public QuizModel(
+      List<RoundModel> rounds,
+      PlayerModel player,
+      LocalDateTime startedAt,
+      LocalDateTime closedAt) {
+    this.rounds = rounds;
+    this.player = player;
+    this.startedAt = startedAt;
+    this.closedAt = closedAt;
+  }
+
+  public QuizModel(List<RoundModel> rounds, PlayerModel player, LocalDateTime startedAt) {
+    this.rounds = rounds;
+    this.player = player;
+    this.startedAt = startedAt;
+  }
 
   public QuizModel(List<RoundModel> rounds, PlayerModel player) {
     this.rounds = rounds;
     this.player = player;
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public void setId(UUID id) {
-    this.id = id;
+    this.startedAt = LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
   }
 
   public List<RoundModel> getRounds() {
@@ -51,5 +70,29 @@ public class QuizModel {
 
   public void setPlayer(PlayerModel player) {
     this.player = player;
+  }
+
+  public LocalDateTime getStartedAt() {
+    return startedAt;
+  }
+
+  public void setStartedAt(LocalDateTime startedAt) {
+    this.startedAt = startedAt;
+  }
+
+  public LocalDateTime getClosedAt() {
+    return closedAt;
+  }
+
+  public void setClosedAt(LocalDateTime closedAt) {
+    this.closedAt = closedAt;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 }

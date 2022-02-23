@@ -22,6 +22,16 @@ public class MovieModel {
 
   @Column private Integer imdbVotes;
 
+  public MovieModel() {
+    // TODO Auto-generated constructor stub
+  }
+
+  public MovieModel(String name, Double imdbRating, Integer imdbVotes) {
+    this.name = name;
+    this.imdbRating = imdbRating;
+    this.imdbVotes = imdbVotes;
+  }
+
   public UUID getId() {
     return id;
   }

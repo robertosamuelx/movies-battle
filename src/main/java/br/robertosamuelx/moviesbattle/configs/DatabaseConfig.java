@@ -1,6 +1,5 @@
 package br.robertosamuelx.moviesbattle.configs;
 
-
 import br.robertosamuelx.moviesbattle.models.PlayerModel;
 import br.robertosamuelx.moviesbattle.repositories.PlayerRepository;
 import javax.annotation.PostConstruct;
