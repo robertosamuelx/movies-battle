@@ -1,5 +1,6 @@
 package br.robertosamuelx.moviesbattle.services;
 
+import br.robertosamuelx.moviesbattle.dtos.PlayerDTO;
 import br.robertosamuelx.moviesbattle.dtos.QuizDTO;
 import br.robertosamuelx.moviesbattle.dtos.RoundDTO;
 import br.robertosamuelx.moviesbattle.exceptions.PlayerException;
@@ -32,8 +33,8 @@ public class QuizService {
     this.playerRepository = playerRepository;
   }
 
-  public QuizDTO startQuiz(PlayerModel player) throws PlayerException {
-    Optional<PlayerModel> playerModelOpt = playerRepository.findById(player.getId());
+  public QuizDTO startQuiz(PlayerDTO player) throws PlayerException {
+    Optional<PlayerModel> playerModelOpt = playerRepository.findById(player.getPlayerId());
 
     if (!playerModelOpt.isPresent() || playerModelOpt.get().getIsPlaying())
       throw PlayerException.invalidPlayer();

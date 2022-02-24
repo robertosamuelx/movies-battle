@@ -23,4 +23,14 @@ public class IssueConstant {
   public static final String ROUND_ALREADY_ANSWERED_MESSAGE = "This round already answered";
   public static final String ROUND_ALREADY_ANSWERED_SUBJECT = "Round already answered";
   public static final int ROUND_ALREADY_ANSWERED_CODE = 4;
+
+  public static final String WRONG_ANSWER_MESSAGE =
+      "Ops, your answer is wrong - Remaining attempts: {0}";
+  public static final String WRONG_ANSWER_SUBJECT = "Answer wrong";
+  public static final int WRONG_ANSWER_CODE = 5;
+
+  public static final String MAX_ATTEMPTS_MESSAGE =
+      "You exceeded the Max attempts ({0}), game over.";
+  public static final String MAX_ATTEMPTS_SUBJECT = "Max attempts";
+  public static final int MAX_ATTEMPTS_CODE = 6;
 }

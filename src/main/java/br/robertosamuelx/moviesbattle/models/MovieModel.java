@@ -63,4 +63,17 @@ public class MovieModel {
   public void setImdbVotes(Integer imdbVotes) {
     this.imdbVotes = imdbVotes;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+
+    if (obj instanceof MovieModel) return true;
+
+    MovieModel that = (MovieModel) obj;
+
+    if (that.getId().equals(this.getId())) return true;
+
+    return false;
+  }
 }

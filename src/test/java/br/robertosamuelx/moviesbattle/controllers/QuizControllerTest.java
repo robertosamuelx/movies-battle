@@ -1,9 +1,9 @@
 package br.robertosamuelx.moviesbattle.controllers;
 
-import br.robertosamuelx.moviesbattle.builders.PlayerModelBuilder;
+import br.robertosamuelx.moviesbattle.builders.PlayerDTOBuilder;
 import br.robertosamuelx.moviesbattle.builders.QuizDTOBuilder;
+import br.robertosamuelx.moviesbattle.dtos.PlayerDTO;
 import br.robertosamuelx.moviesbattle.dtos.QuizDTO;
-import br.robertosamuelx.moviesbattle.models.PlayerModel;
 import br.robertosamuelx.moviesbattle.services.QuizService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,9 @@ public class QuizControllerTest {
   @Test
   public void createQuizSuccessfully() {
     QuizDTO quizDTO = QuizDTOBuilder.build();
-    PlayerModel playerModel = PlayerModelBuilder.build();
+    PlayerDTO playerDTO = PlayerDTOBuilder.build();
     Mockito.when(quizService.startQuiz(Mockito.any())).thenReturn(quizDTO);
-    ResponseEntity<QuizDTO> response = quizController.startQuiz(playerModel);
+    ResponseEntity<QuizDTO> response = quizController.startQuiz(playerDTO);
 
     Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
   }

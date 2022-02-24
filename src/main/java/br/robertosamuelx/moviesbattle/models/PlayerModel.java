@@ -1,6 +1,7 @@
 package br.robertosamuelx.moviesbattle.models;
 
 import java.io.Serializable;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class PlayerModel implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private UUID id;
 
   @Column private String name;
 
@@ -26,15 +27,15 @@ public class PlayerModel implements Serializable {
   @Column(nullable = false)
   private String password;
 
-  @Column private Integer ranking;
+  @Column private Integer ranking = 0;
 
-  @Column private Boolean isPlaying;
+  @Column private Boolean isPlaying = false;
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

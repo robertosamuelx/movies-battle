@@ -1,8 +1,11 @@
 package br.robertosamuelx.moviesbattle.dtos;
 
 import java.util.List;
+import java.util.UUID;
 
 public class RoundDTO {
+
+  private UUID id;
 
   private List<MovieDTO> movies;
 
@@ -28,8 +31,17 @@ public class RoundDTO {
     this.attempts = attempts;
   }
 
-  public RoundDTO(List<MovieDTO> movies, Integer attempts) {
+  public RoundDTO(UUID id, List<MovieDTO> movies, Integer attempts) {
+    this.id = id;
     this.movies = movies;
     this.attempts = attempts;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 }

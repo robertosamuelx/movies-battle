@@ -1,21 +1,29 @@
 package br.robertosamuelx.moviesbattle.dtos;
 
+import java.util.UUID;
+
 public class MovieDTO {
 
+  private UUID id;
+
   private String name;
-
-  private Double imdbRating;
-
-  private Integer imdbVotes;
 
   public MovieDTO() {
     // TODO Auto-generated constructor stub
   }
 
-  public MovieDTO(String name, Double imdbRating, Integer imdbVotes) {
+  public MovieDTO(UUID id, String name) {
+    super();
+    this.id = id;
     this.name = name;
-    this.imdbRating = imdbRating;
-    this.imdbVotes = imdbVotes;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -24,21 +32,5 @@ public class MovieDTO {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Double getImdbRating() {
-    return imdbRating;
-  }
-
-  public void setImdbRating(Double imdbRating) {
-    this.imdbRating = imdbRating;
-  }
-
-  public Integer getImdbVotes() {
-    return imdbVotes;
-  }
-
-  public void setImdbVotes(Integer imdbVotes) {
-    this.imdbVotes = imdbVotes;
   }
 }

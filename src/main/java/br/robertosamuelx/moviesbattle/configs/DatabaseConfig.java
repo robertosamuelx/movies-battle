@@ -1,7 +1,10 @@
 package br.robertosamuelx.moviesbattle.configs;
 
+import br.robertosamuelx.moviesbattle.models.MovieModel;
 import br.robertosamuelx.moviesbattle.models.PlayerModel;
+import br.robertosamuelx.moviesbattle.repositories.MovieRepository;
 import br.robertosamuelx.moviesbattle.repositories.PlayerRepository;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class DatabaseConfig {
 
   @Autowired private PlayerRepository playerRepository;
+  @Autowired private MovieRepository movieRepository;
   private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
 
   @PostConstruct
@@ -36,5 +40,16 @@ public class DatabaseConfig {
     player2.setPassword("123");
     player2.setRanking(0);
     playerRepository.save(player2);
+  }
+
+  @PostConstruct
+  public void createMovies() {
+    for (int i = 0; i < 10; i++) {
+      MovieModel movie = new MovieModel();
+      movie.setImdbRating(new Random().nextDouble() * 10.0);
+      movie.setImdbVotes(new Random().nextInt(100));
+      movie.setName("Movie_" + i);
+      movieRepository.save(movie);
+    }
   }
 }

@@ -5,20 +5,20 @@ import java.util.UUID;
 
 public class QuizDTO {
 
-  private UUID id;
+  private UUID quizId;
   private List<RoundDTO> rounds;
 
   public QuizDTO(UUID id, List<RoundDTO> rounds) {
-    this.id = id;
+    this.quizId = id;
     this.rounds = rounds;
   }
 
-  public UUID getId() {
-    return id;
+  public UUID getQuizId() {
+    return quizId;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public void setQuizId(UUID id) {
+    this.quizId = id;
   }
 
   public List<RoundDTO> getRounds() {

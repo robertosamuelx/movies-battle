@@ -1,8 +1,8 @@
 package br.robertosamuelx.moviesbattle.controllers;
 
+import br.robertosamuelx.moviesbattle.dtos.PlayerDTO;
 import br.robertosamuelx.moviesbattle.dtos.QuizDTO;
 import br.robertosamuelx.moviesbattle.exceptions.PlayerException;
-import br.robertosamuelx.moviesbattle.models.PlayerModel;
 import br.robertosamuelx.moviesbattle.services.QuizService;
 import java.util.UUID;
 import javax.validation.constraints.NotBlank;
@@ -32,12 +32,12 @@ public class QuizController {
   }
 
   @PostMapping
-  public ResponseEntity<QuizDTO> startQuiz(@RequestBody PlayerModel player) throws PlayerException {
+  public ResponseEntity<QuizDTO> startQuiz(@RequestBody PlayerDTO player) throws PlayerException {
 
-    LOGGER.info("Starting new quiz - playerId: {}", player.getId());
+    LOGGER.info("Starting new quiz - playerId: {}", player.getPlayerId());
     QuizDTO startQuiz = service.startQuiz(player);
 
-    LOGGER.info("New quiz has started - quizId: {}", startQuiz.getId());
+    LOGGER.info("New quiz has started - quizId: {}", startQuiz.getQuizId());
     return ResponseEntity.status(HttpStatus.CREATED).body(startQuiz);
   }
 
