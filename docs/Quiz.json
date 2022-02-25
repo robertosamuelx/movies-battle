@@ -1,0 +1,456 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Quiz",
+    "version": "1.0",
+    "description": "API to handle quizes, control rounds, movies and points"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/quiz/{quizId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "quizId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "delete": {
+        "summary": "Delete existent quiz",
+        "operationId": "delete-quiz-quizId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Quiz invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid quiz": {
+                    "value": {
+                      "subject": "Invalid quiz",
+                      "message": "The quiz don't exist or already was closed",
+                      "code": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Close the given quiz"
+      }
+    },
+    "/quiz": {
+      "post": {
+        "summary": "Create New Quiz",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "Quiz Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizResponse"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "quizId": "string",
+                      "rounds": [
+                        {
+                          "id": "string",
+                          "movies": [
+                            {
+                              "id": "string",
+                              "name": "string"
+                            }
+                          ],
+                          "attempts": 0
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid player": {
+                    "value": {
+                      "subject": "Invalid player",
+                      "message": "The player is invalid or already playing a quiz now",
+                      "code": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayerRequest"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "quizId": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "API to create a new quiz."
+        },
+        "description": "Create a new quiz."
+      },
+      "parameters": []
+    },
+    "/quiz/round": {
+      "post": {
+        "summary": "Create new round",
+        "operationId": "post-quiz-round",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoundResponse"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": "string",
+                      "movies": [
+                        {
+                          "id": "string",
+                          "name": "string"
+                        }
+                      ],
+                      "attempts": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "subject": "Invalid quiz",
+                      "message": "The quiz don't exist or already was closed",
+                      "code": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Create new round. Each round has 2 movies, an id and max 3 attempts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizRequest"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "quizId": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Id of quiz that the round will be"
+        }
+      },
+      "put": {
+        "summary": "Answer round",
+        "operationId": "put-quiz-round",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Answer wrong": {
+                    "value": {
+                      "subject": "Answer wrong",
+                      "message": "Ops, your answer is wrong - Remaining attempts: {0}",
+                      "code": 5
+                    }
+                  },
+                  "Max attempts": {
+                    "value": {
+                      "subject": "Max attempts",
+                      "message": "You exceeded the Max attempts ({0}), game over.",
+                      "code": 6
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Answer given round, choose 1 movie",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoundRequest"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "movieId": "f3aed7c2-46ae-453e-979f-70cbd5aaef78",
+                    "roundId": "616a1764-ab05-4b1d-b220-c68122cb1eda"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Invalid player": {
+            "subject": "Invalid player",
+            "message": "The player is invalid or already playing a quiz now",
+            "code": 1
+          },
+          "Invalid quiz": {
+            "subject": "Invalid quiz",
+            "message": "The quiz don't exist or already was closed",
+            "code": 2
+          },
+          "Round not answered": {
+            "subject": "Round not answered",
+            "message": "You cannot start a new round before finish all opened rounds",
+            "code": 3
+          },
+          "Round already answered": {
+            "subject": "Round already answered",
+            "message": "This round already answered",
+            "code": 4
+          },
+          "Answer wrong": {
+            "subject": "Answer wrong",
+            "message": "Ops, your answer is wrong - Remaining attempts: {0}",
+            "code": 5
+          },
+          "Max attempts": {
+            "subject": "Max attempts",
+            "message": "You exceeded the Max attempts ({0}), game over.",
+            "code": 6
+          }
+        },
+        "properties": {
+          "subject": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "code": {
+            "type": "number"
+          }
+        }
+      },
+      "QuizResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "quizId": "9cdf41b3-c79d-40ad-9595-58ff320d78b3",
+            "rounds": []
+          }
+        },
+        "properties": {
+          "quizId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rounds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoundResponse"
+            }
+          }
+        },
+        "required": [
+          "quizId",
+          "rounds"
+        ]
+      },
+      "MovieResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "id": "f3aed7c2-46ae-453e-979f-70cbd5aaef78",
+            "name": "Movie_4"
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "RoundResponse": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "id": "616a1764-ab05-4b1d-b220-c68122cb1eda",
+            "movies": [
+              {
+                "id": "f3aed7c2-46ae-453e-979f-70cbd5aaef78",
+                "name": "Movie_4",
+                "imdbRating": 7.660422765870191,
+                "imdbVotes": 82
+              },
+              {
+                "id": "1d8f61eb-be7e-4310-97f6-4aab91f3612b",
+                "name": "Movie_7",
+                "imdbRating": 5.725273868677555,
+                "imdbVotes": 20
+              }
+            ],
+            "attempts": 0
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "movies": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/MovieResponse"
+            }
+          },
+          "attempts": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "QuizRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "quizId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "quizId"
+        ],
+        "x-examples": {
+          "example-1": {
+            "quizId": "9cdf41b3-c79d-40ad-9595-58ff320d78b3"
+          }
+        }
+      },
+      "PlayerRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "playerId"
+        ],
+        "x-examples": {
+          "example-1": {
+            "playerId": "800b13e2-5649-4418-bb06-a86b5a1eadf5"
+          }
+        }
+      },
+      "RoundRequest": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "movieId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "roundId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "movieId",
+          "roundId"
+        ],
+        "x-examples": {
+          "example-1": {
+            "movieId": "f3aed7c2-46ae-453e-979f-70cbd5aaef78",
+            "roundId": "616a1764-ab05-4b1d-b220-c68122cb1eda"
+          }
+        }
+      }
+    }
+  }
+}

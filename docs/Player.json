@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Player - create",
+    "version": "1.0",
+    "description": "API to handle players"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/players/create": {
+      "post": {
+        "summary": "Create New Player",
+        "operationId": "post-user",
+        "responses": {
+          "201": {
+            "description": "Player Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Player"
+                },
+                "examples": {
+                  "New User Bob Fellow": {
+                    "value": {
+                      "id": 12,
+                      "firstName": "Bob",
+                      "lastName": "Fellow",
+                      "email": "bob.fellow@gmail.com",
+                      "dateOfBirth": "1996-08-24",
+                      "emailVerified": false,
+                      "createDate": "2020-11-18"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "payload-example": {
+                  "value": {
+                    "name": "string",
+                    "login": "string",
+                    "password": "string"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": "Post the necessary fields for the API to create a new player."
+        },
+        "description": "Create a new player."
+      },
+      "parameters": []
+    },
+    "/players/ranking": {
+      "get": {
+        "summary": "Get ranking of players",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "List of players",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-players-ranking",
+        "description": "Get all players order by ranking of points in game"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "description": "Entity when a new player will be created",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "login": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "name",
+          "login",
+          "password"
+        ],
+        "x-examples": {
+          "payload-example": {
+            "name": "Beto",
+            "login": "betin",
+            "password": "123"
+          }
+        },
+        "title": "Player"
+      },
+      "Player": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "playerId": "800b13e2-5649-4418-bb06-a86b5a1eadf5",
+            "name": "Beto",
+            "ranking": 0,
+            "isPlaying": false
+          }
+        },
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ranking": {
+            "type": "number"
+          },
+          "isPlaying": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "playerId"
+        ]
+      }
+    }
+  }
+}

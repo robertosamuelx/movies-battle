@@ -5,6 +5,7 @@ import br.robertosamuelx.moviesbattle.builders.QuizDTOBuilder;
 import br.robertosamuelx.moviesbattle.dtos.PlayerDTO;
 import br.robertosamuelx.moviesbattle.dtos.QuizDTO;
 import br.robertosamuelx.moviesbattle.services.QuizService;
+import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,12 +23,20 @@ public class QuizControllerTest {
   @Mock private QuizService quizService;
 
   @Test
-  public void createQuizSuccessfully() {
+  public void shouldCreateQuizSuccessfully() {
     QuizDTO quizDTO = QuizDTOBuilder.build();
-    PlayerDTO playerDTO = PlayerDTOBuilder.build();
+    PlayerDTO playerDTO = PlayerDTOBuilder.builder().mockValues().build();
     Mockito.when(quizService.startQuiz(Mockito.any())).thenReturn(quizDTO);
     ResponseEntity<QuizDTO> response = quizController.startQuiz(playerDTO);
 
     Assertions.assertEquals(response.getStatusCode(), HttpStatus.CREATED);
+  }
+
+  @Test
+  public void shouldCloseQuizSuccessfully() {
+    UUID quizId = QuizDTOBuilder.build().getQuizId();
+    ResponseEntity response = quizController.stopQuiz(quizId);
+
+    Assertions.assertEquals(response.getStatusCode(), HttpStatus.OK);
   }
 }

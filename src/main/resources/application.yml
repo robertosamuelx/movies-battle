@@ -12,3 +12,8 @@ spring:
     console:
       enabled: true
       path: /h2
+
+omdbapi:
+  url: http://www.omdbapi.com
+  apikey: 2e300fd8
+  movies: Nomadland,Bohemian Rhapsody,Parasite,The Shape of Water,Moonlight,The Revenant,12 years a slave,Django Unchained,the Social network

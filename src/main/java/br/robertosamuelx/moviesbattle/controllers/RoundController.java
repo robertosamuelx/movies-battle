@@ -2,7 +2,6 @@ package br.robertosamuelx.moviesbattle.controllers;
 
 import br.robertosamuelx.moviesbattle.dtos.AnswerDTO;
 import br.robertosamuelx.moviesbattle.dtos.QuizDTO;
-import br.robertosamuelx.moviesbattle.dtos.RoundAnswerDTO;
 import br.robertosamuelx.moviesbattle.dtos.RoundDTO;
 import br.robertosamuelx.moviesbattle.services.RoundService;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +26,7 @@ public class RoundController {
   }
 
   @PutMapping
-  public ResponseEntity<RoundAnswerDTO> answerRound(@RequestBody @NotBlank AnswerDTO answer) {
+  public ResponseEntity answerRound(@RequestBody @NotBlank AnswerDTO answer) {
 
     service.answer(answer);
     return ResponseEntity.status(HttpStatus.OK).build();
